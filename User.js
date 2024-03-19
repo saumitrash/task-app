@@ -51,7 +51,7 @@ userSchema.methods.generateAuthToken = async function () {
   const user = this;
 
   // remove this hard-coded secret and use environment variable
-  const token = jwt.sign({ _id: user._id.toString() }, "secret");
+  const token = jwt.sign({ _id: user._id.toString() }, "your_secret_key");
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
