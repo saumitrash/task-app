@@ -1,0 +1,24 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - app-network
+    volumes:
+      - ./path/to/local/directory:/path/in/container
+
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - app-network
+
+networks:
+  app-network:
