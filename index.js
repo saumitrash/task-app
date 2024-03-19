@@ -1,75 +1,78 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const Task = require("./models");
+
 const app = express();
 
 app.use(express.json());
 
-// Array to store tasks
-let tasks = [];
+// connect to mongoose using docker-compose service name:db
+mongoose.connect("mongodb://db:27017/task-manager", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-// Get all tasks
-app.get("/tasks", (req, res) => {
+// Get all tasks using mongoose
+app.get("/tasks", async (req, res) => {
+  const tasks = await Task.find();
   res.json(tasks);
 });
 
-// Get a specific task by ID
+// Get a specific task by ID using mongoose
 app.get("/tasks/:id", (req, res) => {
   const taskId = req.params.id;
-  const task = tasks.find((task) => task.id === taskId);
 
-  if (!task) {
-    return res.status(404).json({ error: "Task not found" });
-  }
-
-  res.json(task);
+  Task.findById(taskId)
+    .then((task) => {
+      res.json(task);
+    })
+    .catch((err) => {
+      //send error message if task is not found
+      res.status(404).json({ error: "Task not found" });
+    });
 });
 
-// Create a new task
-app.post("/tasks", (req, res) => {
-  const { id, title, description } = req.body;
+// Create a new task using mongoose fields: title, description, status
+app.post("/tasks", async (req, res) => {
+  const { title, description, status } = req.body;
 
-  if (!id || !title || !description) {
-    return res.status(400).json({ error: "Invalid task data" });
-  }
+  const newTask = new Task({ title, description, status });
+  const savedTask = await newTask.save();
 
-  const newTask = { id, title, description };
-  tasks.push(newTask);
-
-  res.status(201).json(newTask);
+  res.json(savedTask);
 });
 
-// Update a task
-app.put("/tasks/:id", (req, res) => {
+// Update a task by ID using mongoose
+app.put("/tasks/:id", async (req, res) => {
   const taskId = req.params.id;
-  const { title, description } = req.body;
+  const { title, description, status } = req.body;
 
-  const taskIndex = tasks.findIndex((task) => task.id === taskId);
+  const updatedTask = await Task.findByIdAndUpdate(
+    taskId,
+    { title, description, status },
+    { new: true }
+  );
 
-  if (taskIndex === -1) {
+  if (!updatedTask) {
     return res.status(404).json({ error: "Task not found" });
   }
-
-  const updatedTask = { ...tasks[taskIndex], title, description };
-  tasks[taskIndex] = updatedTask;
 
   res.json(updatedTask);
 });
 
-// Delete a task
-app.delete("/tasks/:id", (req, res) => {
+// Delete a task by ID using mongoose
+app.delete("/tasks/:id", async (req, res) => {
   const taskId = req.params.id;
 
-  const taskIndex = tasks.findIndex((task) => task.id === taskId);
+  const deletedTask = await Task.findByIdAndDelete(taskId);
 
-  if (taskIndex === -1) {
+  if (!deletedTask) {
     return res.status(404).json({ error: "Task not found" });
   }
-
-  const deletedTask = tasks.splice(taskIndex, 1)[0];
 
   res.json(deletedTask);
 });
 
-// Start the server
 app.listen(3000, () => {
-  console.log("Server started on port 3000");
+  console.log("Server is running on port 3000");
 });

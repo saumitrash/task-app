@@ -11,7 +11,8 @@ services:
     networks:
       - app-network
     volumes:
-      - ./path/to/local/directory:/path/in/container
+      - .:/app # This line mounts the current directory (.) on the host to /app inside the container. Any changes made in the current directory are reflected inside the container.
+      - /app/node_modules # This line creates a Docker volume for /app/node_modules. This is useful when you want to preserve the node_modules folder but don't want to include it in your build context.
 
   db:
     image: mongo
@@ -22,3 +23,5 @@ services:
 
 networks:
   app-network:
+    driver: bridge
+
