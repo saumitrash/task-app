@@ -9,12 +9,10 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: "No token provided" });
   }
   const token = authHeader.split(" ")[1];
-  console.log(token);
 
   try {
     // Verify the token
     const decoded = jwt.verify(token, "your_secret_key");
-    console.log(decoded);
 
     // Attach the decoded user information to the request object
     req.userId = decoded.userId;
