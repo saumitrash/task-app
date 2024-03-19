@@ -18,72 +18,104 @@ mongoose.connect("mongodb://db:27017/task-manager", {
 
 // Get all tasks using mongoose
 app.get("/tasks", authMiddleware, async (req, res) => {
-  console.log(req.userId);
   try {
     const user = await User.findById(req.userId);
     if (!user) {
-      return res.status(404).send({ error: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
-    await user.populate("tasks").execPopulate();
-    res.send(user.tasks);
+    await user.populate("tasks");
+    res.status(200).json(user.tasks);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ error: error.message });
   }
 });
 
 // Get a specific task by ID using mongoose
-app.get("/tasks/:id", (req, res) => {
+app.get("/tasks/:id", authMiddleware, async (req, res) => {
   const taskId = req.params.id;
+  const userId = req.userId; // Get the user ID from the auth middleware
 
-  Task.findById(taskId)
-    .then((task) => {
-      res.json(task);
-    })
-    .catch((err) => {
-      //send error message if task is not found
-      res.status(404).json({ error: "Task not found" });
-    });
+  try {
+    const task = await Task.findOne({ _id: taskId, userId });
+
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 // Create a new task using mongoose fields: title, description, status
-app.post("/tasks", async (req, res) => {
+app.post("/tasks", authMiddleware, async (req, res) => {
   const { title, description, status } = req.body;
 
-  const newTask = new Task({ title, description, status });
+  const newTask = new Task({
+    title,
+    description,
+    status,
+    userId: req.userId, // Add the user's ID to the task
+  });
+
   const savedTask = await newTask.save();
+
+  // Also add the task to the user's tasks
+  const user = await User.findById(req.userId);
+  user.tasks.push(savedTask._id);
+  await user.save();
 
   res.json(savedTask);
 });
 
 // Update a task by ID using mongoose
-app.put("/tasks/:id", async (req, res) => {
+app.put("/tasks/:id", authMiddleware, async (req, res) => {
   const taskId = req.params.id;
+  const userId = req.userId; // Get the user ID from the auth middleware
   const { title, description, status } = req.body;
 
-  const updatedTask = await Task.findByIdAndUpdate(
-    taskId,
-    { title, description, status },
-    { new: true }
-  );
+  try {
+    const task = await Task.findOneAndUpdate(
+      { _id: taskId, userId },
+      { title, description, status },
+      { new: true }
+    );
 
-  if (!updatedTask) {
-    return res.status(404).json({ error: "Task not found" });
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    res.json(task);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
   }
-
-  res.json(updatedTask);
 });
 
 // Delete a task by ID using mongoose
-app.delete("/tasks/:id", async (req, res) => {
+app.delete("/tasks/:id", authMiddleware, async (req, res) => {
   const taskId = req.params.id;
+  const userId = req.userId; // Get the user ID from the auth middleware
 
-  const deletedTask = await Task.findByIdAndDelete(taskId);
+  try {
+    const task = await Task.findOneAndDelete({ _id: taskId, userId });
 
-  if (!deletedTask) {
-    return res.status(404).json({ error: "Task not found" });
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    // Also remove the task from the user's tasks
+    const user = await User.findById(userId);
+    const taskIndex = user.tasks.indexOf(taskId);
+    if (taskIndex > -1) {
+      user.tasks.splice(taskIndex, 1);
+      await user.save();
+    }
+
+    res.json(task);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
   }
-
-  res.json(deletedTask);
 });
 
 app.listen(3000, () => {
