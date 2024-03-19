@@ -1,10 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Task = require("./models");
-
+const authMiddleware = require("./middleware/authMiddleware");
+const authRoutes = require("./routes/auth");
+const User = require("./User");
 const app = express();
 
 app.use(express.json());
+
+app.use("/auth", authRoutes);
 
 // connect to mongoose using docker-compose service name:db
 mongoose.connect("mongodb://db:27017/task-manager", {
@@ -13,9 +17,18 @@ mongoose.connect("mongodb://db:27017/task-manager", {
 });
 
 // Get all tasks using mongoose
-app.get("/tasks", async (req, res) => {
-  const tasks = await Task.find();
-  res.json(tasks);
+app.get("/tasks", authMiddleware, async (req, res) => {
+  console.log(req.userId);
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+    await user.populate("tasks").execPopulate();
+    res.send(user.tasks);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 // Get a specific task by ID using mongoose

@@ -11,17 +11,15 @@ router.post("/register", async (req, res) => {
     // Get the user data from the request body
     const { username, password } = req.body;
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Save the user to the database
-    const newUser = new User({ username, password: password });
+    const newUser = new User({ username, password });
+    await newUser.save();
 
     // Return a success response
     res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
     // Handle any errors
-    res.status(500).json({ error: "An error occurred" });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -48,13 +46,13 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate a JWT token
-    const token = jwt.sign({ userId: user.id }, "your-secret-key");
+    const token = await user.generateAuthToken();
 
     // Return the token
     res.status(200).json({ token });
   } catch (error) {
     // Handle any errors
-    res.status(500).json({ error: "An error occurred" });
+    res.status(500).json({ error: error.message });
   }
 });
 
