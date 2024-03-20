@@ -49,7 +49,7 @@ router.post("/", authMiddleware, async (req, res) => {
   const savedTask = await newTask.save();
 
   // Also add the task to the user's tasks
-  const user = await User.findById(req.userId);
+  const user = req.user;
   user.tasks.push(savedTask._id);
   await user.save();
 
@@ -92,7 +92,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     }
 
     // Also remove the task from the user's tasks
-    const user = await User.findById(userId);
+    const user = req.user;
     const taskIndex = user.tasks.indexOf(taskId);
     if (taskIndex > -1) {
       user.tasks.splice(taskIndex, 1);
