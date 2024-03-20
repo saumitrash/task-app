@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -52,6 +53,24 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     // Handle any errors
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.post("/logout", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.tokens = user.tokens.filter((token) => {
+      return token.token !== req.token;
+    });
+    await user.save();
+
+    res.send({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
   }
 });
 

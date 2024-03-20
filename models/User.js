@@ -47,7 +47,12 @@ userSchema.methods.generateAuthToken = async function () {
   const user = this;
 
   // remove this hard-coded secret and use environment variable
-  const token = jwt.sign({ userId: user._id.toString() }, "your_secret_key");
+  const token = jwt.sign({ userId: user._id.toString() }, "your_secret_key", {
+    expiresIn: "10h",
+  });
+  // When a token expires, the server will reject requests using that token,
+  // forcing the client to authenticate again (usually by logging in).
+  // The server does not need to manually remove or invalidate the token.
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
