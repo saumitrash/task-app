@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const userSchema = Joi.object({
   username: Joi.string().required(),
-  email: Joi.string().email().required(),
+  email: Joi.string().email(),
   password: Joi.string().required(),
   tokens: Joi.array().items(
     Joi.object({
