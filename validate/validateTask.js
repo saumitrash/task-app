@@ -7,6 +7,6 @@ const taskSchema = Joi.object({
   userId: Joi.string().required(),
 });
 
-exports.validateTask = (task) => {
+module.exports = (task) => {
   return taskSchema.validate(task);
 };

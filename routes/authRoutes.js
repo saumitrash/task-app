@@ -2,7 +2,6 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
-const validateUser = require("../validate/validateUser");
 
 const router = express.Router();
 
@@ -20,12 +19,6 @@ router.post("/register", async (req, res) => {
 
     // Save the user to the database
     const newUser = new User({ username, password });
-
-    // Validate the user
-    const { error } = validateUser(newUser);
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
 
     await newUser.save();
 

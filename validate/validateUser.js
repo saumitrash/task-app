@@ -12,6 +12,7 @@ const userSchema = Joi.object({
   tasks: Joi.array().items(Joi.string()),
 });
 
-exports.validateUser = (user) => {
+// export validate user function
+module.exports = (user) => {
   return userSchema.validate(user);
 };
