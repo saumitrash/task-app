@@ -11,6 +11,12 @@ router.post("/register", async (req, res) => {
     // Get the user data from the request body
     const { username, password } = req.body;
 
+    // Check if the user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ error: "Username already in use" });
+    }
+
     // Save the user to the database
     const newUser = new User({ username, password });
     await newUser.save();

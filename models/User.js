@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // an array because perhaps the user may want to use multiple devices
   tokens: [
     {
       token: {

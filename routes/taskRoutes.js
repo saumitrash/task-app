@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const Task = require("../models/Task");
 const authMiddleware = require("../middleware/authMiddleware");
+const validateTask = require("../validate/validateTask");
 
 router.get("/", authMiddleware, async (req, res) => {
   try {
@@ -46,6 +47,12 @@ router.post("/", authMiddleware, async (req, res) => {
     userId: req.userId, // Add the user's ID to the task
   });
 
+  // Validate the task
+  const { error } = validateTask(newTask);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+
   const savedTask = await newTask.save();
 
   // Also add the task to the user's tasks
@@ -61,6 +68,12 @@ router.put("/:id", authMiddleware, async (req, res) => {
   const taskId = req.params.id;
   const userId = req.userId; // Get the user ID from the auth middleware
   const { title, description, status } = req.body;
+
+  // Validate the task
+  const { error } = validateTask({ title, description, status, userId });
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
 
   try {
     const task = await Task.findOneAndUpdate(
