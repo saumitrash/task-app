@@ -1,8 +1,8 @@
-import { Badge, Heading, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import TaskCard, { TaskCardProps, TaskStatus } from "./TaskCard";
+import { Badge, Heading, Link, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { TaskCardProps, TaskStatus } from "./TaskCard";
 import apiClient from "../../services/api-client";
-import { useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 
 const TaskDetail = () => {
   const [task, setTask] = useState<TaskCardProps>();
@@ -17,7 +17,7 @@ const TaskDetail = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [id]);
   return (
     <>
       <Heading as="h1" size="xl" mb={10}>
@@ -25,6 +25,19 @@ const TaskDetail = () => {
       </Heading>
       <Badge colorScheme="yellow">{task?.status || TaskStatus.ToDo}</Badge>
       <Text>{task?.description || "Desc..."}</Text>
+
+      <VStack mt={10} alignItems="start">
+        <Link
+          textDecoration="underline"
+          as={RouterLink}
+          to={`/dashboard/tasks/edit/${id}`}
+        >
+          Edit
+        </Link>
+        <Link textDecoration="underline" as={RouterLink} to={`/dashboard`}>
+          Back to dashboard
+        </Link>
+      </VStack>
     </>
   );
 };

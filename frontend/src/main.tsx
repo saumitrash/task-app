@@ -10,6 +10,8 @@ import Register from "./components/Auth/Register.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
 import PrivateRoute from "./components/Auth/PrivateRoute.tsx";
 import TaskDetail from "./components/Dashboard/TaskDetail.tsx";
+import EditTaskPage from "./components/Dashboard/EditTaskPage.tsx";
+import AddTaskPage from "./components/Dashboard/AddTaskPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/tasks/:id",
         element: <TaskDetail />,
+      },
+      {
+        path: "/dashboard/tasks/edit/:id",
+        element: <EditTaskPage />,
+      },
+      {
+        path: "/dashboard/tasks/add",
+        element: <AddTaskPage />,
       },
     ],
   },

@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import TaskCard from "./TaskCard";
-import { TaskCardProps, TaskStatus } from "./TaskCard";
+import { TaskCardProps } from "./TaskCard";
 import { useEffect, useState } from "react";
 import apiClient from "../../services/api-client";
 
@@ -31,16 +31,20 @@ import apiClient from "../../services/api-client";
 
 const TaskGrid = () => {
   const [tasks, setTasks] = useState<TaskCardProps[]>([]);
+  const [reload, setReload] = useState(false);
+
   useEffect(() => {
     apiClient.get("/tasks").then((response) => {
       setTasks(response.data);
     });
   }, []);
+
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={10}>
       {tasks.map((task, index) => (
         <GridItem key={index}>
           <TaskCard
+            _id={task._id}
             title={task.title}
             description={task.description}
             status={task.status}
