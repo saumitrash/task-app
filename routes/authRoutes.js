@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Register endpoint
 router.post("/register", async (req, res) => {
+  console.log("--> register hit");
   try {
     // Get the user data from the request body
     const { username, password } = req.body;
@@ -32,6 +33,7 @@ router.post("/register", async (req, res) => {
 
 // Login endpoint
 router.post("/login", async (req, res) => {
+  console.log("--> login hit");
   try {
     // Get the user data from the request body
     const { username, password } = req.body;
@@ -71,6 +73,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", authMiddleware, async (req, res) => {
+  console.log("--> logout hit");
   try {
     const user = await User.findById(req.userId);
     if (!user) {
@@ -86,6 +89,12 @@ router.post("/logout", authMiddleware, async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
+});
+
+router.post("/verify-token", authMiddleware, (req, res) => {
+  console.log("--> verify-token hit");
+  // If the middleware did not return an error, the token is valid
+  res.json({ user: req.user });
 });
 
 module.exports = router;

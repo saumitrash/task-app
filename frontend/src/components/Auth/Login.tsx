@@ -6,34 +6,150 @@ import {
   Button,
   Heading,
   Link,
+  useToast,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  Navigate,
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import apiClient from "../../services/api-client";
 
 const Login = () => {
-  return (
-    <Box p={3}>
-      <Heading size="lg" mb={10}>
-        Log In
-      </Heading>
-      <FormControl id="username">
-        <FormLabel>Username</FormLabel>
-        <Input type="text" />
-      </FormControl>
-      <FormControl id="password" mt={4}>
-        <FormLabel>Password</FormLabel>
-        <Input type="password" />
-      </FormControl>
-      <Button mt={4} colorScheme="teal" type="submit">
-        Login
-      </Button>
-      <Box mt={4}>
-        Don't have an account?{" "}
-        <Link textDecoration="underline" as={RouterLink} to="/register">
-          Register
-        </Link>
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  const location = useLocation();
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
+    apiClient
+      .post("/auth/verify-token")
+      .then((response) => {
+        if (response.status === 200) {
+          setAuthenticated(true);
+        } else {
+          setAuthenticated(false);
+        }
+      })
+      .catch(() => {
+        setAuthenticated(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [location]);
+
+  const toast = useToast();
+
+  const showError = (message: string) => {
+    toast({
+      title: "Error",
+      description: message,
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
+  const showSuccess = (message: string) => {
+    toast({
+      title: "Success",
+      description: message,
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(username, password);
+
+    try {
+      const response = await apiClient.post("/auth/login", {
+        username,
+        password,
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Login failed");
+      }
+
+      const token = response.data.token;
+
+      localStorage.setItem("token", token);
+
+      // Handle successful login here, e.g. redirecting to another page
+      navigate("/dashboard");
+
+      showSuccess("Login successful!");
+    } catch (err) {
+      // If there's an error, set the error state
+      setError(err.message);
+      setUsername("");
+      setPassword("");
+      navigate("/login", { replace: true });
+      showError("Incorrect details. Try again!");
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (authenticated) {
+    return <Navigate to="/dashboard" />;
+  } else {
+    return (
+      <Box p={3}>
+        <Heading size="lg" mb={10}>
+          Log In
+        </Heading>
+        <form onSubmit={handleLogin}>
+          <FormControl id="username">
+            <FormLabel>Username</FormLabel>
+            <Input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl id="password" mt={4}>
+            <FormLabel>Password</FormLabel>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormControl>
+          <Button mt={4} colorScheme="teal" type="submit">
+            Login
+          </Button>
+        </form>
+        <Box mt={4}>
+          Don't have an account?{" "}
+          <Link textDecoration="underline" as={RouterLink} to="/register">
+            Register
+          </Link>
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
 };
 
 export default Login;

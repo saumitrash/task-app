@@ -24,7 +24,7 @@ export interface TaskCardProps {
   status: TaskStatus;
 }
 
-const Task = ({ title, description, status }: TaskCardProps) => {
+const TaskCard = ({ title, description, status }: TaskCardProps) => {
   let statusColorScheme: string;
   switch (status) {
     case "To Do":
@@ -69,15 +69,7 @@ const Task = ({ title, description, status }: TaskCardProps) => {
         </ButtonGroup>
       </CardFooter>
     </Card>
-    // <Box p={5} shadow="md" borderWidth="1px">
-
-    //   <Badge colorScheme={statusColorScheme}>{status}</Badge>
-    //   <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
-    //     {title}
-    //   </Text>
-    //   <Text mt={2}>{description}</Text>
-    // </Box>
   );
 };
 
-export default Task;
+export default TaskCard;

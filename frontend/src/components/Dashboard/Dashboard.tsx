@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import TaskGrid from "./TaskGrid";
 
 const Dashboard = () => {
@@ -17,7 +17,7 @@ const Dashboard = () => {
         <Heading size="lg" mb={5}>
           My Tasks
         </Heading>
-        <Box padding={5}>
+        <Box>
           <TaskGrid />
         </Box>
       </Box>

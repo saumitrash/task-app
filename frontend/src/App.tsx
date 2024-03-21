@@ -1,12 +1,12 @@
-import React from "react";
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
-import Dashboard from "./components/Dashboard/Dashboard";
+import { Outlet } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
 
 function App() {
-  return <div>Hellow</div>;
+  return (
+    <Box padding={5}>
+      <Outlet />
+    </Box>
+  );
 }
 
 export default App;

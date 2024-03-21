@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import Task from "./Task";
-import { TaskCardProps, TaskStatus } from "./Task";
+import TaskCard from "./TaskCard";
+import { TaskCardProps, TaskStatus } from "./TaskCard";
 
 const tasks: TaskCardProps[] = [
   { title: "Task 1", description: "Description 1", status: TaskStatus.ToDo },
@@ -32,7 +32,7 @@ const TaskGrid = () => {
     <Grid templateColumns="repeat(3, 1fr)" gap={10}>
       {tasks.map((task, index) => (
         <GridItem key={index}>
-          <Task
+          <TaskCard
             title={task.title}
             description={task.description}
             status={task.status}

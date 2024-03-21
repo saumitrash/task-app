@@ -8,23 +8,33 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Auth/Login.tsx";
 import Register from "./components/Auth/Register.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
+import PrivateRoute from "./components/Auth/PrivateRoute.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
+    errorElement: <h1>Not Found</h1>,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/",
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <Dashboard />,
+          },
+        ],
+      },
+    ],
   },
 ]);
 
