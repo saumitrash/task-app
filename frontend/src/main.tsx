@@ -9,6 +9,7 @@ import Login from "./components/Auth/Login.tsx";
 import Register from "./components/Auth/Register.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
 import PrivateRoute from "./components/Auth/PrivateRoute.tsx";
+import TaskDetail from "./components/Dashboard/TaskDetail.tsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             element: <Dashboard />,
           },
         ],
+      },
+      {
+        path: "/dashboard/tasks/:id",
+        element: <TaskDetail />,
       },
     ],
   },

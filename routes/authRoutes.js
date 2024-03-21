@@ -91,10 +91,15 @@ router.post("/logout", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/verify-token", authMiddleware, (req, res) => {
+router.get("/verify-token", authMiddleware, (req, res) => {
   console.log("--> verify-token hit");
   // If the middleware did not return an error, the token is valid
-  res.json({ user: req.user });
+  res.json({ username: req.user.username });
+});
+
+router.get("/me", authMiddleware, (req, res) => {
+  console.log("--> me hit");
+  res.json({ username: req.user.username });
 });
 
 module.exports = router;

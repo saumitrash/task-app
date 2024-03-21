@@ -25,6 +25,7 @@ export interface TaskCardProps {
 }
 
 const TaskCard = ({ title, description, status }: TaskCardProps) => {
+  // TODO: Extract this logic to a helper function
   let statusColorScheme: string;
   switch (status) {
     case "To Do":

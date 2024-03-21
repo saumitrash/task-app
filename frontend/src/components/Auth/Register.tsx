@@ -28,6 +28,7 @@ const Register = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const location = useLocation();
 
+  // TODO: Extract this logic into a custom hook
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -38,7 +39,7 @@ const Register = () => {
     }
 
     apiClient
-      .post("/auth/verify-token")
+      .get("/auth/verify-token")
       .then((response) => {
         if (response.status === 200) {
           setAuthenticated(true);
@@ -56,6 +57,7 @@ const Register = () => {
 
   const toast = useToast();
 
+  // TODO: Extract this logic into a custom hook
   const showError = (message: string) => {
     toast({
       title: "Error",

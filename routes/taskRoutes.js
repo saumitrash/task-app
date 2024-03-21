@@ -5,6 +5,7 @@ const Task = require("../models/Task");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/", authMiddleware, async (req, res) => {
+  console.log("--> get all tasks hit");
   try {
     const user = await User.findById(req.userId);
     if (!user) {
@@ -19,6 +20,7 @@ router.get("/", authMiddleware, async (req, res) => {
 
 // Get a specific task by ID using mongoose
 router.get("/:id", authMiddleware, async (req, res) => {
+  console.log("--> get task by id hit");
   const taskId = req.params.id;
   const userId = req.userId; // Get the user ID from the auth middleware
 
@@ -37,6 +39,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
 
 // Create a new task using mongoose fields: title, description, status
 router.post("/", authMiddleware, async (req, res) => {
+  console.log("--> create task hit");
   const { title, description, status } = req.body;
 
   const newTask = new Task({
@@ -58,6 +61,7 @@ router.post("/", authMiddleware, async (req, res) => {
 
 // Update a task by ID using mongoose
 router.put("/:id", authMiddleware, async (req, res) => {
+  console.log("--> update task hit");
   const taskId = req.params.id;
   const userId = req.userId; // Get the user ID from the auth middleware
   const { title, description, status } = req.body;
@@ -81,6 +85,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 
 // Delete a task by ID using mongoose
 router.delete("/:id", authMiddleware, async (req, res) => {
+  console.log("--> delete task hit");
   const taskId = req.params.id;
   const userId = req.userId; // Get the user ID from the auth middleware
 

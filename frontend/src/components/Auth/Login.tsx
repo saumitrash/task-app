@@ -27,6 +27,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  // TODO: Extract this logic into a custom hook
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -37,7 +38,7 @@ const Login = () => {
     }
 
     apiClient
-      .post("/auth/verify-token")
+      .get("/auth/verify-token")
       .then((response) => {
         if (response.status === 200) {
           setAuthenticated(true);
