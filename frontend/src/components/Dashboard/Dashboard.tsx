@@ -18,6 +18,8 @@ const Dashboard = () => {
     });
   });
 
+  // TODO: add function to filter tasks by status
+
   return (
     <Box>
       <Heading as="h1" size="xl" mb={10}>

@@ -13,6 +13,9 @@ import TaskDetail from "./components/Dashboard/TaskDetail.tsx";
 import EditTaskPage from "./components/Dashboard/EditTaskPage.tsx";
 import AddTaskPage from "./components/Dashboard/AddTaskPage.tsx";
 
+// TODO: add a 404 component
+// TODO: add a dockerfile for the frontend
+
 const router = createBrowserRouter([
   {
     path: "/",
