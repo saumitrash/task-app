@@ -10,7 +10,7 @@
 
 ## Description
 
-This project is a task management application built with React and TypeScript. Users can create, update, delete, and filter tasks by status.
+This project is a task management application built with React-based frontend and express based backend. We're using mongo-db to store and manage our data here. Users can create, update, delete, and filter tasks by status.
 
 ## Features
 
