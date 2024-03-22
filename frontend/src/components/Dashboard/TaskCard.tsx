@@ -56,7 +56,7 @@ const TaskCard = ({ _id, title, description, status }: TaskCardProps) => {
             size="xs"
             variant="solid"
             colorScheme="blue"
-            onClick={(e) => navigate(`/dashboard/tasks/edit/${_id}`)}
+            onClick={() => navigate(`/dashboard/tasks/edit/${_id}`)}
           >
             Edit
           </Button>
