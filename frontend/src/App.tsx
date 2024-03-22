@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 
 function App() {
   return (
-    <Box padding={5}>
+    <Box padding={10}>
       <Outlet />
     </Box>
   );

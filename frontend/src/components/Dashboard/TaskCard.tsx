@@ -14,12 +14,13 @@ import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/api-client";
 
+// TODO: Extract this enum to a separate file
 export enum TaskStatus {
   ToDo = "To Do",
   InProgress = "In Progress",
   Done = "Done",
 }
-
+// TODO: Extract this interface to a separate file
 export interface TaskCardProps {
   _id: string;
   title: string;
@@ -29,7 +30,7 @@ export interface TaskCardProps {
 
 const TaskCard = ({ _id, title, description, status }: TaskCardProps) => {
   const navigate = useNavigate();
-  // TODO: Extract this logic to a helper function
+  // TODO: Extract this color scheme to a helper function
   let statusColorScheme: string;
   switch (status) {
     case "To Do":

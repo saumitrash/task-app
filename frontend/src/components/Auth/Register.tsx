@@ -17,8 +17,6 @@ import {
 } from "react-router-dom";
 import apiClient from "../../services/api-client";
 
-// TODO: Verify working of register page
-
 const Register = () => {
   const navigate = useNavigate();
 
