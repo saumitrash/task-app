@@ -10,7 +10,7 @@
 
 ## Description
 
-This project is a task management application built with React-based frontend and express based backend. We're using mongo-db to store and manage our data here. Users can create, update, delete, and filter tasks by status.
+This project is a task management application built with React-based frontend and express based backend. I've used mongo-db to store and manage the data. Users are authenticated using a `jwt` token which stays valid for 24 hours.
 
 ## Features
 
@@ -35,4 +35,5 @@ To use the application, navigate to `http://localhost:5173/dashboard` in your br
 
 - responsiveness
 - form validation
--
+- Truncate title and description in a Task card
+- good practice: to confirm with user before deleting a task!

@@ -87,13 +87,16 @@ const Login = () => {
   } else {
     return (
       <Box p={3}>
+        <Heading size="xl" mb={10} color="cyan">
+          Taskapp{"."}
+        </Heading>
         <Heading size="lg" mb={10}>
           Log In
         </Heading>
         {/* TODO: add field for error */}
         {/* TODO: extract form to a separate component */}
         <form onSubmit={handleLogin}>
-          <FormControl id="username">
+          <FormControl id="username" isRequired>
             <FormLabel>Username</FormLabel>
             <Input
               type="text"
@@ -102,7 +105,7 @@ const Login = () => {
             />
           </FormControl>
 
-          <FormControl id="password" mt={4}>
+          <FormControl id="password" mt={4} isRequired>
             <FormLabel>Password</FormLabel>
             <Input
               type="password"

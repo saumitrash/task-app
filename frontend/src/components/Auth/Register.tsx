@@ -60,13 +60,16 @@ const Register = () => {
   } else {
     return (
       <Box p={3}>
+        <Heading size="xl" mb={10} color="cyan">
+          Taskapp{"."}
+        </Heading>
         <Heading size="lg" mb={10}>
           Register
         </Heading>
         {/* TODO: add field for error */}
         {/* TODO: extract form to a separate component */}
         <form onSubmit={handleSubmit}>
-          <FormControl id="username" mt={4}>
+          <FormControl id="username" mt={4} isRequired>
             <FormLabel>Username</FormLabel>
             <Input
               type="text"
@@ -74,7 +77,7 @@ const Register = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </FormControl>
-          <FormControl id="password" mt={4}>
+          <FormControl id="password" mt={4} isRequired>
             <FormLabel>Password</FormLabel>
             <Input
               type="password"
