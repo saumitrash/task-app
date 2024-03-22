@@ -12,6 +12,7 @@ import PrivateRoute from "./components/Auth/PrivateRoute.tsx";
 import TaskDetail from "./components/Dashboard/TaskDetail.tsx";
 import EditTaskPage from "./components/Dashboard/EditTaskPage.tsx";
 import AddTaskPage from "./components/Dashboard/AddTaskPage.tsx";
+import ErrorPage from "./components/ErrorPage.tsx";
 
 // TODO: add a 404 component
 // TODO: add a dockerfile for the frontend
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <h1>Not Found</h1>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/login",

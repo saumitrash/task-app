@@ -74,8 +74,6 @@ const Dashboard = () => {
     });
   };
 
-  // TODO: add function to filter tasks by status
-
   return (
     <Box>
       <HStack mb={10} justifyContent="space-between">
@@ -87,7 +85,6 @@ const Dashboard = () => {
         </Button>
       </HStack>
 
-      {/* TODO: add a logout button */}
       <Heading as="h2" size="lg" mb={10}>
         Hi, {username}!
       </Heading>
