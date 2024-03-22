@@ -15,6 +15,7 @@ import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { TaskCardProps, TaskStatus } from "../../types/task";
+import { getStatus } from "../../helpers/getStatus";
 
 const Dashboard = () => {
   const [username, setUsername] = useState("");
@@ -34,19 +35,6 @@ const Dashboard = () => {
         console.error(error);
       });
   }, []);
-
-  const getStatus = (status: string) => {
-    switch (status) {
-      case "To Do":
-        return TaskStatus.ToDo;
-      case "In Progress":
-        return TaskStatus.InProgress;
-      case "Done":
-        return TaskStatus.Done;
-      default:
-        return TaskStatus.ToDo;
-    }
-  };
 
   const handleAdd = () => {
     navigate("/dashboard/tasks/add");

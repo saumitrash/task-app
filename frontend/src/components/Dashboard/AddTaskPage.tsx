@@ -13,6 +13,7 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import apiClient from "../../services/api-client";
 
 import { TaskCardProps, TaskStatus } from "../../types/task";
+import { getStatus } from "../../helpers/getStatus";
 
 // TODO: form validation
 
@@ -24,19 +25,6 @@ const AddTaskPage = () => {
     status: TaskStatus.ToDo,
   });
   const navigate = useNavigate();
-
-  const getStatus = (status: string) => {
-    switch (status) {
-      case "To Do":
-        return TaskStatus.ToDo;
-      case "In Progress":
-        return TaskStatus.InProgress;
-      case "Done":
-        return TaskStatus.Done;
-      default:
-        return TaskStatus.ToDo;
-    }
-  };
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();

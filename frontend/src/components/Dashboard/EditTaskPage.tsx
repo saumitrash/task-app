@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import apiClient from "../../services/api-client";
 import { TaskCardProps, TaskStatus } from "../../types/task";
+import { getStatus } from "../../helpers/getStatus";
 
 // TODO: form validation
 
@@ -25,19 +26,6 @@ const EditTaskPage = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-
-  const getStatus = (status: string) => {
-    switch (status) {
-      case "To Do":
-        return TaskStatus.ToDo;
-      case "In Progress":
-        return TaskStatus.InProgress;
-      case "Done":
-        return TaskStatus.Done;
-      default:
-        return TaskStatus.ToDo;
-    }
-  };
 
   const handleEdit = (e: React.FormEvent) => {
     e.preventDefault();
