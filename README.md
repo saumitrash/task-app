@@ -6,6 +6,7 @@
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Future Work](#future-work)
 
 ## Description
 
@@ -29,3 +30,9 @@ To install the project, follow these steps:
 ## Usage
 
 To use the application, navigate to `http://localhost:5173/dashboard` in your browser after running the Docker Compose file.
+
+## Future work
+
+- responsiveness
+- form validation
+-

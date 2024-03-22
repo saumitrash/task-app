@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import TaskCard from "./TaskCard";
-import { TaskCardProps } from "./TaskCard";
+import { TaskCardProps } from "../../types/task";
 
 const TaskGrid = ({ tasks }: { tasks: TaskCardProps[] }) => {
   return (

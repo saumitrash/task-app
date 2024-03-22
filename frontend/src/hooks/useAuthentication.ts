@@ -3,7 +3,6 @@ import apiClient from "../services/api-client"; // replace with your actual apiC
 import { useLocation } from "react-router-dom";
 
 const useAuthentication = () => {
-  // replace 'any' with the actual type of 'location'
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const location = useLocation();

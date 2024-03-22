@@ -13,41 +13,14 @@ import {
 import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/api-client";
-
-// TODO: Extract this enum to a separate file
-export enum TaskStatus {
-  ToDo = "To Do",
-  InProgress = "In Progress",
-  Done = "Done",
-}
-// TODO: Extract this interface to a separate file
-export interface TaskCardProps {
-  _id: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
-}
+import { TaskCardProps } from "../../types/task";
+import { getStatusColorScheme } from "../../helpers/colorScheme";
 
 const TaskCard = ({ _id, title, description, status }: TaskCardProps) => {
   const navigate = useNavigate();
   // TODO: Extract this color scheme to a helper function
-  let statusColorScheme: string;
-  switch (status) {
-    case "To Do":
-      statusColorScheme = "yellow";
-      break;
-    case "In Progress":
-      statusColorScheme = "blue";
-      break;
-    case "Done":
-      statusColorScheme = "green";
-      break;
-    default:
-      statusColorScheme = "gray";
-  }
 
   // handle delete
-  // TODO: Consider using a modal to confirm the delete action
   const handleDelete = () => {
     apiClient
       .delete(`/tasks/${_id}`)
@@ -65,7 +38,7 @@ const TaskCard = ({ _id, title, description, status }: TaskCardProps) => {
       <CardHeader>
         <HStack justifyContent="space-between">
           <Heading size="md">{title}</Heading>
-          <Badge colorScheme={statusColorScheme}>{status}</Badge>
+          <Badge colorScheme={getStatusColorScheme(status)}>{status}</Badge>
         </HStack>
       </CardHeader>
       <CardBody>

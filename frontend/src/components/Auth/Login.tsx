@@ -8,25 +8,17 @@ import {
   Link,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import {
-  Navigate,
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useState } from "react";
+import { Navigate, Link as RouterLink, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api-client";
 import useAuthentication from "../../hooks/useAuthentication";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [loading, setLoading] = useState(true);
-  // const [authenticated, setAuthenticated] = useState(false);
 
   const { authenticated, loading } = useAuthentication();
 
-  // const location = useLocation();
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -55,7 +47,6 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(username, password);
 
     try {
       const response = await apiClient.post("/auth/login", {

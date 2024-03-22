@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { TaskCardProps, TaskStatus } from "./TaskCard";
+import { TaskCardProps, TaskStatus } from "../../types/task";
 
 const Dashboard = () => {
   const [username, setUsername] = useState("");

@@ -6,17 +6,12 @@ import {
   Heading,
   Input,
   Link,
-  useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import {
-  Navigate,
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useState } from "react";
+import { Navigate, Link as RouterLink, useNavigate } from "react-router-dom";
 import apiClient from "../../services/api-client";
 import useAuthentication from "../../hooks/useAuthentication";
+import useToastMessages from "../../hooks/useToastMessages";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -24,65 +19,12 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { showError, showSuccess } = useToastMessages();
 
-  // const [loading, setLoading] = useState(true);
-  // const [authenticated, setAuthenticated] = useState(false);
   const { loading, authenticated } = useAuthentication();
-  // const location = useLocation();
-
-  // TODO: Extract this logic into a custom hook
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (!token) {
-  //     setAuthenticated(false);
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   apiClient
-  //     .get("/auth/verify-token")
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setAuthenticated(true);
-  //       } else {
-  //         setAuthenticated(false);
-  //       }
-  //     })
-  //     .catch(() => {
-  //       setAuthenticated(false);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, [location]);
-
-  const toast = useToast();
-
-  // TODO: Extract this logic into a custom hook
-  const showError = (message: string) => {
-    toast({
-      title: "Error",
-      description: message,
-      status: "error",
-      duration: 5000,
-      isClosable: true,
-    });
-  };
-
-  const showSuccess = (message: string) => {
-    toast({
-      title: "Success",
-      description: message,
-      status: "success",
-      duration: 2000,
-      isClosable: true,
-    });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(username, password);
 
     try {
       const response = await apiClient.post("/auth/register", {

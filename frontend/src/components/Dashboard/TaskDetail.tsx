@@ -1,8 +1,9 @@
 import { Badge, Heading, Link, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { TaskCardProps, TaskStatus } from "./TaskCard";
+import { TaskCardProps, TaskStatus } from "../../types/task";
 import apiClient from "../../services/api-client";
 import { Link as RouterLink, useParams } from "react-router-dom";
+import { getStatusColorScheme } from "../../helpers/colorScheme";
 
 const TaskDetail = () => {
   const [task, setTask] = useState<TaskCardProps>();
@@ -23,7 +24,10 @@ const TaskDetail = () => {
       <Heading as="h1" size="xl" mb={10}>
         {task?.title || "Task"}
       </Heading>
-      <Badge colorScheme="yellow">{task?.status || TaskStatus.ToDo}</Badge>
+      {/* TODO: apply a dynamic color scheme */}
+      <Badge colorScheme={getStatusColorScheme(task?.status || "yellow")}>
+        {task?.status || TaskStatus.ToDo}
+      </Badge>
       <Text>{task?.description || "Desc..."}</Text>
 
       <VStack mt={10} alignItems="start">

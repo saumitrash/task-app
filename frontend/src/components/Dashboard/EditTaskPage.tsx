@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import apiClient from "../../services/api-client";
-import { TaskCardProps, TaskStatus } from "./TaskCard";
+import { TaskCardProps, TaskStatus } from "../../types/task";
 
 // TODO: form validation
 
