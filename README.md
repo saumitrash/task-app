@@ -37,3 +37,5 @@ To use the application, navigate to `http://localhost:5173/dashboard` in your br
 - **Robust form validation**: stronger validation for password, and maybe other fields
 - **Truncate title and description in a Task card**: we may want to put a limit on the number of character allowed in these fields. Moreover, we can also show a truncated form on the dashboard if these excede a certain length.
 - **Prompt before delete**: good practice to confirm with user before deleting a task!
+- **Hardcoded secrets**: I've left the keys for database connection and `jwt` encryption in the code itself deliberately in the interest of time, but ideally we should fetch them using environment variables.
+- **Redundancies**: Some react components have similar callback functions which can be extracted into separate files and generalized to be reused
