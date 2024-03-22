@@ -16,6 +16,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import apiClient from "../../services/api-client";
+import useAuthentication from "../../hooks/useAuthentication";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -24,36 +25,37 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-  const location = useLocation();
+  // const [loading, setLoading] = useState(true);
+  // const [authenticated, setAuthenticated] = useState(false);
+  const { loading, authenticated } = useAuthentication();
+  // const location = useLocation();
 
   // TODO: Extract this logic into a custom hook
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    if (!token) {
-      setAuthenticated(false);
-      setLoading(false);
-      return;
-    }
+  //   if (!token) {
+  //     setAuthenticated(false);
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    apiClient
-      .get("/auth/verify-token")
-      .then((response) => {
-        if (response.status === 200) {
-          setAuthenticated(true);
-        } else {
-          setAuthenticated(false);
-        }
-      })
-      .catch(() => {
-        setAuthenticated(false);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [location]);
+  //   apiClient
+  //     .get("/auth/verify-token")
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         setAuthenticated(true);
+  //       } else {
+  //         setAuthenticated(false);
+  //       }
+  //     })
+  //     .catch(() => {
+  //       setAuthenticated(false);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, [location]);
 
   const toast = useToast();
 

@@ -16,43 +16,20 @@ import {
   useNavigate,
 } from "react-router-dom";
 import apiClient from "../../services/api-client";
+import useAuthentication from "../../hooks/useAuthentication";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-  const location = useLocation();
+  // const [loading, setLoading] = useState(true);
+  // const [authenticated, setAuthenticated] = useState(false);
+
+  const { authenticated, loading } = useAuthentication();
+
+  // const location = useLocation();
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
-  // TODO: Extract this logic into a custom hook
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setAuthenticated(false);
-      setLoading(false);
-      return;
-    }
-
-    apiClient
-      .get("/auth/verify-token")
-      .then((response) => {
-        if (response.status === 200) {
-          setAuthenticated(true);
-        } else {
-          setAuthenticated(false);
-        }
-      })
-      .catch(() => {
-        setAuthenticated(false);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [location]);
 
   const toast = useToast();
 
