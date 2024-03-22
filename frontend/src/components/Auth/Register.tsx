@@ -23,10 +23,13 @@ const Register = () => {
 
   const { loading, authenticated } = useAuthentication();
 
+  // TODO: extract this logic into a hook
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
+      // TODO: add this logic inside APIClient class
       const response = await apiClient.post("/auth/register", {
         username,
         password,
@@ -60,6 +63,8 @@ const Register = () => {
         <Heading size="lg" mb={10}>
           Register
         </Heading>
+        {/* TODO: add field for error */}
+        {/* TODO: extract form to a separate component */}
         <form onSubmit={handleSubmit}>
           <FormControl id="username" mt={4}>
             <FormLabel>Username</FormLabel>

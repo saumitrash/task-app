@@ -18,7 +18,6 @@ import { getStatusColorScheme } from "../../helpers/colorScheme";
 
 const TaskCard = ({ _id, title, description, status }: TaskCardProps) => {
   const navigate = useNavigate();
-  // TODO: Extract this color scheme to a helper function
 
   // handle delete
   const handleDelete = () => {

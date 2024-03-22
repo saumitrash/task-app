@@ -24,7 +24,6 @@ const TaskDetail = () => {
       <Heading as="h1" size="xl" mb={10}>
         {task?.title || "Task"}
       </Heading>
-      {/* TODO: apply a dynamic color scheme */}
       <Badge colorScheme={getStatusColorScheme(task?.status || "yellow")}>
         {task?.status || TaskStatus.ToDo}
       </Badge>
