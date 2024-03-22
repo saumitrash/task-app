@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, HStack } from "@chakra-ui/react";
 import TaskGrid from "./TaskGrid";
 import { useEffect, useState } from "react";
 import apiClient from "../../services/api-client";
@@ -18,13 +18,27 @@ const Dashboard = () => {
     });
   });
 
+  // handle logout
+  const handleLogout = () => {
+    apiClient.post("/auth/logout").then(() => {
+      localStorage.removeItem("token");
+      navigate("/login");
+    });
+  };
+
   // TODO: add function to filter tasks by status
 
   return (
     <Box>
-      <Heading as="h1" size="xl" mb={10}>
-        Dashboard
-      </Heading>
+      <HStack mb={10} justifyContent="space-between">
+        <Heading as="h1" size="xl">
+          Dashboard
+        </Heading>
+        <Button colorScheme="gray" size="lg" onClick={handleLogout}>
+          Logout
+        </Button>
+      </HStack>
+
       {/* TODO: add a logout button */}
       <Heading as="h2" size="lg" mb={10}>
         Hi, {username}!

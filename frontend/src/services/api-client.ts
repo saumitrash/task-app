@@ -12,4 +12,7 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+// TODO: make an APIClient class that extends apiClient
+// TODO: export the APIClient class
+
 export default apiClient;

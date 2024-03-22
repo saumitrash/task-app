@@ -13,6 +13,8 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import apiClient from "../../services/api-client";
 import { TaskCardProps, TaskStatus } from "./TaskCard";
 
+// TODO: form validation
+
 const AddTaskPage = () => {
   const [task, setTask] = useState<TaskCardProps>({
     _id: "",

@@ -82,6 +82,8 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(username, password);
+
     try {
       const response = await apiClient.post("/auth/register", {
         username,
@@ -98,7 +100,7 @@ const Register = () => {
       setError("Incorrect details");
       setUsername("");
       setPassword("");
-      showError("Incorrect details. Try again!");
+      showError(err.message);
       // back to same page
       navigate("/register", { replace: true });
     }
