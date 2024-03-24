@@ -14,8 +14,6 @@ import EditTaskPage from "./components/Dashboard/EditTaskPage.tsx";
 import AddTaskPage from "./components/Dashboard/AddTaskPage.tsx";
 import ErrorPage from "./components/ErrorPage.tsx";
 
-// TODO: add a dockerfile for the frontend
-
 const router = createBrowserRouter([
   {
     path: "/",

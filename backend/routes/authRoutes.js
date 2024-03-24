@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
 
     // Check if the user exists
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Compare the password with the hashed password
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
 
     // Check if the password is valid
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid password" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Generate a JWT token
@@ -85,7 +85,7 @@ router.post("/logout", authMiddleware, async (req, res) => {
     });
     await user.save();
 
-    res.send({ message: "Logged out successfully" });
+    res.status(200).send({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }

@@ -15,8 +15,6 @@ import apiClient from "../../services/api-client";
 import { TaskCardProps, TaskStatus } from "../../types/task";
 import { getStatus } from "../../helpers/getStatus";
 
-// TODO: form validation
-
 const AddTaskPage = () => {
   const [task, setTask] = useState<TaskCardProps>({
     _id: "",

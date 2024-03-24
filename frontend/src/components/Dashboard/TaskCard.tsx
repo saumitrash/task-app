@@ -50,25 +50,39 @@ const TaskCard = ({ _id, title, description, status }: TaskCardProps) => {
         </Stack>
       </CardBody>
       <Divider />
-      <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button
-            size="xs"
-            variant="solid"
-            colorScheme="blue"
-            onClick={() => navigate(`/dashboard/tasks/edit/${_id}`)}
-          >
-            Edit
-          </Button>
-          <Button
-            size="xs"
-            variant="solid"
-            colorScheme="red"
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
-        </ButtonGroup>
+      <CardFooter justifyContent={"space-between"}>
+        <Box>
+          <ButtonGroup spacing="2">
+            <Button
+              size="xs"
+              variant="solid"
+              colorScheme="blue"
+              onClick={() => navigate(`/dashboard/tasks/edit/${_id}`)}
+            >
+              Edit
+            </Button>
+            <Button
+              size="xs"
+              variant="solid"
+              colorScheme="red"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </ButtonGroup>
+        </Box>
+        <Box>
+          <ButtonGroup spacing="2">
+            <Button
+              size="xs"
+              variant="solid"
+              colorScheme="green"
+              onClick={() => navigate(`/dashboard/tasks/${_id}`)}
+            >
+              View
+            </Button>
+          </ButtonGroup>
+        </Box>
       </CardFooter>
     </Card>
   );

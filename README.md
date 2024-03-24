@@ -4,6 +4,7 @@
 
 - [Description](#description)
 - [Features](#features)
+- [Assumptions](#assumptions)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Future Work](#future-work)
@@ -18,6 +19,10 @@ This project is a task management application built with React-based frontend an
 - Update an existing task
 - Delete a task
 - Filter tasks by status
+
+## Assumptions
+
+-
 
 ## Installation
 
@@ -39,3 +44,5 @@ To use the application, navigate to `http://localhost:5173/dashboard` in your br
 - **Prompt before delete**: good practice to confirm with user before deleting a task!
 - **Hardcoded secrets**: I've left the keys for database connection and `jwt` encryption in the code itself deliberately in the interest of time, but ideally we should fetch them using environment variables.
 - **Redundancies**: Some react components have similar callback functions which can be extracted into separate files and generalized to be reused
+- **Search**: be able to search tasks using title
+- **Due date**: Show due date of the tasks, and possibly sort tasks with this date

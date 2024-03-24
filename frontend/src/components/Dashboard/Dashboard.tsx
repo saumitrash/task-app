@@ -100,6 +100,7 @@ const Dashboard = () => {
             <MenuItem onClick={() => setFilter("Done")}>Done</MenuItem>
           </MenuList>
         </Menu>
+
         <Divider mt={2} colorScheme="gray" />
         <Box mt={10}>
           <TaskGrid tasks={filterTasks(filter)} />
