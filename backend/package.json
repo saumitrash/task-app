@@ -4,8 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watchAll --detectOpenHandles --runInBand",
     "start": "nodemon index.js"
+  },
+  "jest": {
+    "pathIgnorePatterns": [
+      "node_modules"
+    ],
+    "testPathPattern": [
+      "test"
+    ],
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",

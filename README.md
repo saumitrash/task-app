@@ -7,6 +7,7 @@
 - [Assumptions](#assumptions)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing](#testing)
 - [Future Work](#future-work)
 
 ## Description
@@ -19,10 +20,12 @@ This project is a task management application built with React-based frontend an
 - Update an existing task
 - Delete a task
 - Filter tasks by status
+- Authentication using JWT (Register/Log In/Log out) - token expires automatically in 24h
 
 ## Assumptions
 
--
+- A user can have multiple tasks, but a task is associated with only one user
+- Authentication: Every route (except login/register) is protected by an authentication middleware (authMiddleware). This implies that only authenticated users can interact with these endpoints
 
 ## Installation
 
@@ -30,11 +33,21 @@ To install the project, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/saumitrash/task-app.git`
 2. Navigate into the project directory: `cd task-app`
-3. Run the Docker Compose file: `docker compose up`
+3. Build and start the services using Makefile: `make build`
 
 ## Usage
 
-To use the application, navigate to `http://localhost:5173/dashboard` in your browser after running the Docker Compose file.
+After running the `make build` command in the last section:
+
+Navigate to `http://localhost:5173/dashboard` in your browser
+
+## Testing
+
+To run the tests, use the following command:
+
+```bash
+make run-test
+```
 
 ## Future work
 
