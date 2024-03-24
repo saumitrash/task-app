@@ -5,4 +5,4 @@ build:
 
 run-test:
 	docker build -t task-app-test-image -f backend/Dockerfile.test backend
-	docker run task-app-test-image
+	docker run --name task-app-container -it --rm task-app-test-image

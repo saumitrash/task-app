@@ -8,6 +8,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
+- [Video Demo](#video-demo)
 - [Future Work](#future-work)
 
 ## Description
@@ -48,6 +49,10 @@ To run the tests, use the following command:
 ```bash
 make run-test
 ```
+
+## Video Demo
+
+[Watch the Loom video](https://www.loom.com/share/cfc709446a4e481db6cb53e43b9d4ad3?sid=ff8b16b3-f231-46f5-b254-19ad8ccc8d65)
 
 ## Future work
 
